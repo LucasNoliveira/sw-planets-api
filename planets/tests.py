@@ -1,6 +1,8 @@
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIClient
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.urls import reverse
 from .models import Planet
+from django.contrib.auth.models import User
 
 class PlanetAPITest(APITestCase):
     """
@@ -24,6 +26,13 @@ class PlanetAPITest(APITestCase):
             terrains="ice",
             climates="frozen"
         )
+
+        self.user = User.objects.create_user(username='testuser', password='password123')
+
+        refresh = RefreshToken.for_user(self.user)
+        self.access_token = str(refresh.access_token)
+        self.client = APIClient()
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
 
     def test_create_planet(self):
         """
