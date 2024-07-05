@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install docker-compose
+          pip install docker compose
 
       - name: Set environment variables
         run: |
@@ -50,14 +50,14 @@ jobs:
 
       - name: Build and run the containers
         run: |
-          docker-compose -f docker-compose.yml up -d --build
+          docker compose -f docker compose.yml up -d --build
 
       - name: Wait for the database to be ready
         run: |
-          until docker-compose exec db pg_isready --timeout=0; do sleep 1; done
+          until docker compose exec db pg_isready --timeout=0; do sleep 1; done
 
       - name: Run migrations
-        run: docker-compose exec web python manage.py migrate
+        run: docker compose exec web python manage.py migrate
 
       - name: Run tests
-        run: docker-compose exec web python manage.py test
+        run: docker compose exec web python manage.py test
