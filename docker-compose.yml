@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env.dev
+    networks:
+      - planetsDB
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+    networks:
+      - planetsDB
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.dev
+    depends_on:
+      - db
+
+networks:
+  planetsDB:
+
+volumes:
+  postgres_data:
