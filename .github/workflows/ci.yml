@@ -36,19 +36,24 @@ jobs:
         with:
           python-version: '3.8'
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install docker compose
-
       - name: Stop existing service on port 5432
         run: |
           if sudo lsof -i -P -n | grep LISTEN | grep 5432; then
             echo "Port 5432 is already in use, stopping conflicting service."
-            sudo systemctl stop postgresql || sudo fuser -k 5432/tcp
+            if sudo systemctl is-active --quiet postgresql; then
+              sudo systemctl stop postgresql
+            else
+              sudo fuser -k 5432/tcp
+            fi
           else
             echo "Port 5432 is free."
           fi
+
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install docker compose
 
       - name: Set environment variables
         run: |
