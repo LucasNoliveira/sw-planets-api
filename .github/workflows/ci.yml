@@ -41,6 +41,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install docker compose
 
+      - name: Stop existing service on port 5432
+        run: |
+          sudo fuser -k 5432/tcp
+
       - name: Set environment variables
         run: |
           echo "POSTGRES_DB=${POSTGRES_DB}" >> .env
