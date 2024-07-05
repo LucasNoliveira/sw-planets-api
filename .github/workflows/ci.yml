@@ -20,7 +20,7 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         ports:
-          - 5432:5432
+          - 5433:5433
         options: >-
           --health-cmd="pg_isready -U postgres" 
           --health-interval=10s 
@@ -41,13 +41,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install docker compose
 
-      - name: Stop existing service on port 5432
+      - name: Stop existing service on port 5433
         run: |
-          if sudo lsof -i -P -n | grep LISTEN | grep 5432; then
-            echo "Port 5432 is already in use, stopping conflicting service."
-            sudo systemctl stop postgresql || sudo fuser -k 5432/tcp
+          if sudo lsof -i -P -n | grep LISTEN | grep 5433; then
+            echo "Port 5433 is already in use, stopping conflicting service."
+            sudo systemctl stop postgresql || sudo fuser -k 5433/tcp
           else
-            echo "Port 5432 is free."
+            echo "Port 5433 is free."
           fi
 
       - name: Set environment variables
