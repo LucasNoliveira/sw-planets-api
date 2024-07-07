@@ -32,13 +32,13 @@ git clone https://github.com/LucasNoliveira/sw-planets-panel.git
 cd sw-planets-panel
 ```
 
-3. Create and configure environment variables:  
+2. Create and configure environment variables:  
 ```
 cp .env.example .env
  # Update the .env file with your configurations
 ```
 
-5. Build and run the Docker containers:  
+3. Build and run the Docker containers:  
 ```
 docker-compose up --build
 ```
