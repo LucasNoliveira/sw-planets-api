@@ -27,26 +27,100 @@ This project implements a CRUD (Create, Read, Update, Delete) RESTful API in Dja
 ## Setup Instructions
 To run this project locally, follow these steps:
 1. Clone the repository:  
-`git clone https://github.com/LucasNoliveira/sw-planets-panel.git`  
-`cd sw-planets-panel`
+```
+git clone https://github.com/LucasNoliveira/sw-planets-panel.git  
+cd sw-planets-panel
+```
 
-2. Create and configure environment variables:  
-`cp .env.example .env # Update the .env file with your configurations`
+3. Create and configure environment variables:  
+```
+cp .env.example .env
+ # Update the .env file with your configurations
+```
 
-3. Build and run the Docker containers:  
-`docker-compose up --build`
+5. Build and run the Docker containers:  
+```
+docker-compose up --build
+```
 
-### Authentication
-Before accessing the API endpoints, you need to generate a JSON Web Token (JWT) for authentication. Here's how you can generate a JWT:
+## Running the Project
+Once the Docker containers are up and running, the Django server will be accessible at http://localhost:8000.
 
-1. **Obtain JWT**: Send a POST request to the `/api/token/` endpoint with your credentials to obtain a JWT.
-   
-   Example using curl:
-   ```bash
-   curl -X POST \
-     -H "Content-Type: application/json" \
-     -d '{"username": "your_username", "password": "your_password"}' \
-     http://localhost:8000/api/token/
-   Replace your_username and your_password with your actual credentials.
+### Usage
 
+#### Authentication
+To use the API, you need to obtain a JWT token. Register a new user and log in to get the token.
+
+1. Register a new user:
+```
+POST /api/register/
+{
+    "username": "yourusername",
+    "password": "yourpassword"
+}
+```
+2. Log in to get the token:
+```
+POST /api/token/
+{
+    "username": "yourusername",
+    "password": "yourpassword"
+}
+```
+3. Use the token in the Authorization header for subsequent requests:
+```
+Authorization: Bearer <your_token>
+```
+
+## API Endpoints
+
+### CRUD Operations:
+1. Create a new planet:
+
+```
+   POST /api/planets/
+{
+    "name": "Tatooine",
+    "population": "200000",
+    "terrains": ["desert"],
+    "climates": ["arid"]
+}
+```
+2. Retrieve all planets:
+```
+GET /api/planets/
+```
+
+3. Retrieve a specific planet:
+```
+GET /api/planets/{id}/
+```
+
+4. Update a planet:
+
+```
+   PUT /api/planets/{id}/
+{
+    "name": "Tatooine",
+    "population": "200000",
+    "terrains": ["desert"],
+    "climates": ["arid"]
+}
+```
+5. Delete a planet:
+```
+   DELETE /api/planets/{id}/
+```
+
+## Running Tests
+```
+docker-compose exec web python manage.py test
+```
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+Made with love by Lucas Oliveira ❤️  
+
+![Darth Vader looking Tatooine sunset](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzI5ZGZzZzczbGQwbGphaWk2YW80Z2M5Z3JsNmdlNG8zb3lxeG9nNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0K4k1O7RJSghST3a/giphy.webp)
 
