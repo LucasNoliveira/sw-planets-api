@@ -47,7 +47,7 @@ cp .env.example .env
 
 3. Build and run the Docker containers:  
 ```
-docker-compose up --build
+docker compose up --build
 ```
 
 ## Running the Project
