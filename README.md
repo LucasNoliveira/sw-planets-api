@@ -49,6 +49,10 @@ cp .env.example .env
 ```
 docker compose up --build
 ```
+4. Populate the PostgreSQL Database:
+```
+docker compose run web python manage.py fetch_planets 
+```
 
 ## Running the Project
 Once the Docker containers are up and running, the Django server will be accessible at http://localhost:8000.
