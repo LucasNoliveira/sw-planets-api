@@ -18,6 +18,13 @@ This project implements a CRUD (Create, Read, Update, Delete) RESTful API in Dja
    * Deleting entries
    * JWT Authentication: Secure API endpoints with JWT (JSON Web Tokens) authentication.
 
+## Technologies Used
+![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
+![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+
 ## Requirements
 * Docker and Docker Compose
 * Python 3.8+
