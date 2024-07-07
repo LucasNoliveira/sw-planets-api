@@ -18,7 +18,15 @@ This project implements a CRUD (Create, Read, Update, Delete) RESTful API in Dja
    * Deleting entries
    * JWT Authentication: Secure API endpoints with JWT (JSON Web Tokens) authentication.
 
-## Authentication
+## Setup Instructions
+To run this project locally, follow these steps:
+1. Clone the repository:  
+`git clone https://github.com/LucasNoliveira/sw-planets-panel.git`  
+`cd sw-planets-panel`
+
+
+
+### Authentication
 Before accessing the API endpoints, you need to generate a JSON Web Token (JWT) for authentication. Here's how you can generate a JWT:
 
 1. **Obtain JWT**: Send a POST request to the `/api/token/` endpoint with your credentials to obtain a JWT.
