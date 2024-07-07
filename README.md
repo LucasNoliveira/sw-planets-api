@@ -3,7 +3,7 @@
 ![Darth Vader looking Tatooine sunset](https://64.media.tumblr.com/9dc2e9cc2805063596f0153f3296df4e/tumblr_pp8bteVjQb1w4t7wqo2_540.gifv)
 
 ## Overview
-This project implements a CRUD (Create, Read, Update, Delete) RESTful API in Django to interact with data retrieved from an external GraphQL endpoint. The goal is to fetch data from the Star Wars API GraphQL endpoint, store it in a local database, and provide endpoints to manage this data.
+This project implements a CRUD (Create, Read, Update, Delete) RESTful API in Django to interact with data retrieved from an external GraphQL endpoint. The goal is to fetch data from the Star Wars API GraphQL endpoint, store it in a local database, and provide endpoints to manage this data. The project uses Docker for development, JWT for authentication, and Django's testing framework.
 
 ## Goals
 
@@ -18,13 +18,23 @@ This project implements a CRUD (Create, Read, Update, Delete) RESTful API in Dja
    * Deleting entries
    * JWT Authentication: Secure API endpoints with JWT (JSON Web Tokens) authentication.
 
+## Requirements
+* Docker and Docker Compose
+* Python 3.8+
+* Django 3.2+
+* PostgreSQL
+
 ## Setup Instructions
 To run this project locally, follow these steps:
 1. Clone the repository:  
 `git clone https://github.com/LucasNoliveira/sw-planets-panel.git`  
 `cd sw-planets-panel`
 
+2. Create and configure environment variables:  
+`cp .env.example .env # Update the .env file with your configurations`
 
+3. Build and run the Docker containers:  
+`docker-compose up --build`
 
 ### Authentication
 Before accessing the API endpoints, you need to generate a JSON Web Token (JWT) for authentication. Here's how you can generate a JWT:
