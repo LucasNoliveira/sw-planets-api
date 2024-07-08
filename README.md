@@ -35,8 +35,8 @@ This project implements a CRUD (Create, Read, Update, Delete) RESTful API in Dja
 To run this project locally, follow these steps:
 1. Clone the repository:  
 ```
-git clone https://github.com/LucasNoliveira/sw-planets-panel.git  
-cd sw-planets-panel
+git clone https://github.com/LucasNoliveira/sw-planets-api.git  
+cd sw-planets-api
 ```
 
 2. Create and configure environment variables:  
