@@ -23,6 +23,17 @@ services:
     environment:
       DATABASE_URL: ${DATABASE_URL}
 
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - web
+    networks:
+      - planetsDB
+
 networks:
   planetsDB:
 
