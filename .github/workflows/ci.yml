@@ -79,10 +79,6 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.DEPLOY_SERVER_SSH_KEY }}
 
-      - name: Copy files to EC2
-        run: |
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude '.git' ./ ${{ secrets.DEPLOY_SERVER_USER }}@${{ secrets.DEPLOY_SERVER_HOST }}:/home/${{ secrets.DEPLOY_SERVER_USER }}/app/
-
       - name: Stop existing service on port 8000
         run: |
           if sudo lsof -i -P -n | grep LISTEN | grep 8000; then
@@ -91,7 +87,11 @@ jobs:
           else
             echo "Port 8000 is free."
           fi
-          
+
+      - name: Copy files to EC2
+        run: |
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude '.git' ./ ${{ secrets.DEPLOY_SERVER_USER }}@${{ secrets.DEPLOY_SERVER_HOST }}:/home/${{ secrets.DEPLOY_SERVER_USER }}/app/
+
       - name: SSH and deploy
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_SERVER_USER }}@${{ secrets.DEPLOY_SERVER_HOST }} << 'EOF'
