@@ -131,6 +131,9 @@ GET /api/planets/{id}/
 docker-compose exec web python manage.py test
 ```
 
+## Deployment
+This project is deployed on an AWS EC2 instance. You can access the live deployment of this project at Star Wars Planets API through the following address: http://3.130.205.160 .
+
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
