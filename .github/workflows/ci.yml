@@ -11,9 +11,9 @@ jobs:
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      EC2_HOST: ${{ secrets.EC2_HOST }}
-      EC2_USER: ${{ secrets.EC2_USER }}
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      DEPLOY_SERVER_HOST: ${{ secrets.DEPLOY_SERVER_HOST }}
+      DEPLOY_SERVER_USER: ${{ secrets.DEPLOY_SERVER_USER }}
+      DEPLOY_SERVER_SSH_KEY: ${{ secrets.DEPLOY_SERVER_SSH_KEY }}
 
     steps:
       - name: Checkout code
@@ -77,16 +77,16 @@ jobs:
       - name: Add SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.DEPLOY_SERVER_SSH_KEY }}
 
       - name: Copy files to EC2
         run: |
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude '.git' ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/app/
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude '.git' ./ ${{ secrets.DEPLOY_SERVER_USER }}@${{ secrets.DEPLOY_SERVER_HOST }}:/home/${{ secrets.DEPLOY_SERVER_USER }}/app/
 
       - name: SSH and deploy
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            cd /home/${{ secrets.EC2_USER }}/app/
+          ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_SERVER_USER }}@${{ secrets.DEPLOY_SERVER_HOST }} << 'EOF'
+            cd /home/${{ secrets.DEPLOY_SERVER_USER }}/app/
             echo "POSTGRES_DB=${POSTGRES_DB}" >> .env
             echo "POSTGRES_USER=${POSTGRES_USER}" >> .env
             echo "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" >> .env
