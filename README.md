@@ -2,7 +2,19 @@
 
 ![Darth Vader looking Tatooine sunset](https://64.media.tumblr.com/9dc2e9cc2805063596f0153f3296df4e/tumblr_pp8bteVjQb1w4t7wqo2_540.gifv)
 
-## Overview
+## Sumário
+- [Overview](#overview)
+- [Goals](#goals)
+- [Technologies Used](#technologies-used)
+- [Requirements](#requirements)
+- [Setup Instructions](#setup-instructions)
+- [Running the Project](#running-the-project)
+- [API Endpoints](#api-endpoints)
+- [Running Tests](#running-tests)
+- [Deployment](#deployment)
+- [License](#license)
+
+## Overview <a name="overview"></a>
 This project implements a CRUD (Create, Read, Update, Delete) RESTful API in Django to interact with data retrieved from an external GraphQL endpoint. The goal is to fetch data from the Star Wars API GraphQL endpoint, store it in a local database, and provide endpoints to manage this data. The project uses Docker for development, JWT for authentication, and Django's testing framework.
 
 ## Goals
