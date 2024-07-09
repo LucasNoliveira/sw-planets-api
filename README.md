@@ -2,7 +2,7 @@
 
 ![Darth Vader looking Tatooine sunset](https://64.media.tumblr.com/9dc2e9cc2805063596f0153f3296df4e/tumblr_pp8bteVjQb1w4t7wqo2_540.gifv)
 
-## Summary
+## Table of Contents
 - [Overview](#overview)
 - [Goals](#goals)
 - [Technologies Used](#technologies-used)
