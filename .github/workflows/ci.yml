@@ -83,6 +83,15 @@ jobs:
         run: |
           rsync -avz -e "ssh -o StrictHostKeyChecking=no" --exclude '.git' ./ ${{ secrets.DEPLOY_SERVER_USER }}@${{ secrets.DEPLOY_SERVER_HOST }}:/home/${{ secrets.DEPLOY_SERVER_USER }}/app/
 
+      - name: Stop existing service on port 8000
+        run: |
+          if sudo lsof -i -P -n | grep LISTEN | grep 8000; then
+            echo "Port 8000 is already in use, stopping conflicting service."
+            sudo fuser -k 8000/tcp
+          else
+            echo "Port 8000 is free."
+          fi
+          
       - name: SSH and deploy
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_SERVER_USER }}@${{ secrets.DEPLOY_SERVER_HOST }} << 'EOF'
