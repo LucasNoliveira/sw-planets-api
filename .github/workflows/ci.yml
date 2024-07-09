@@ -1,10 +1,6 @@
 name: Django CI/CD
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
+on: [push, pull_request]
 
 jobs:
   build:
@@ -23,24 +19,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Stop existing service on port 8000
-        run: |
-          if sudo lsof -i -P -n | grep LISTEN | grep 8000; then
-            echo "Port 8000 is already in use, stopping conflicting service."
-            sudo fuser -k 8000/tcp
-          else
-            echo "Port 8000 is free."
-          fi
-
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.8'
 
+      - name: Stop existing service on port 5432
+        run: |
+          if sudo lsof -i -P -n | grep LISTEN | grep 5432; then
+            echo "Port 5432 is already in use, stopping conflicting service."
+            if sudo systemctl is-active --quiet postgresql; then
+              sudo systemctl stop postgresql
+            else
+              sudo fuser -k 5432/tcp
+            fi
+          else
+            echo "Port 5432 is free."
+          fi
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install docker-compose
+          pip install docker compose
 
       - name: Set environment variables
         run: |
@@ -51,20 +51,20 @@ jobs:
 
       - name: Build and run the containers
         run: |
-          docker-compose -f docker-compose.yml up -d --build
+          docker compose -f docker-compose.yml up -d --build
 
       - name: Wait for the database to be ready
         run: |
-          until docker-compose exec db pg_isready --timeout=0; do sleep 1; done
+          until docker compose exec db pg_isready --timeout=0; do sleep 1; done
 
       - name: Run migrations
-        run: docker-compose exec web python manage.py migrate
+        run: docker compose exec web python manage.py migrate
 
       - name: Run tests
-        run: docker-compose exec web python manage.py test
+        run: docker compose exec web python manage.py test
 
       - name: Populate planets database
-        run: docker-compose exec web python manage.py fetch_planets
+        run: docker compose exec web python manage.py fetch_planets
 
   deploy:
     runs-on: ubuntu-latest
@@ -91,8 +91,8 @@ jobs:
             echo "POSTGRES_USER=${POSTGRES_USER}" >> .env
             echo "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" >> .env
             echo "DATABASE_URL=${DATABASE_URL}" >> .env
-            sudo docker-compose down
-            sudo docker-compose up -d --build
-            sudo docker-compose exec web python manage.py migrate
-            sudo docker-compose exec web python manage.py collectstatic --noinput
+            sudo docker compose down
+            sudo docker compose up -d --build
+            sudo docker compose exec web python manage.py migrate
+            sudo docker compose exec web python manage.py collectstatic --noinput
           EOF
