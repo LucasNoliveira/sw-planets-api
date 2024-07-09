@@ -9,4 +9,4 @@ COPY . /app
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 core.wsgi:application"]
+CMD ["sh", "-c", "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 core.wsgi:application", "docker compose exec web python manage.py fetch_planets"]
