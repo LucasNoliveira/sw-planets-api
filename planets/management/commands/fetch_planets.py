@@ -24,13 +24,12 @@ class Command(BaseCommand):
         data = response.json()
 
         for planet_data in data['data']['allPlanets']['planets']:
-            print(planet_data)  # Exibir os dados retornados pela API
+            print(planet_data)
 
-            # Inserir os dados no banco de dados
             Planet.objects.update_or_create(
                 name=planet_data['name'],
                 defaults={
-                    'population': planet_data['population'] or 'unknown',  # Default value if None
+                    'population': planet_data['population'] or 'unknown',
                     'terrains': ', '.join(planet_data['terrains']) if planet_data['terrains'] else 'unknown',
                     'climates': ', '.join(planet_data['climates']) if planet_data['climates'] else 'unknown',
                 }
